@@ -1,134 +1,77 @@
-$(document).ready(function () {
+lucide.createIcons();
 
-    const BASE_URL = "http://localhost:8080/api/v1/items";
+// Items data (demo –  backend  replace )
+const items = [
+    { code: "1001", name: "Teacup", price: 250.00, qty: 45 },
+    { code: "1002", name: "Plate", price: 400.00, qty: 30 }
+];
 
-    getAllItems();
+// Table load  function (Items page )
+function loadItems() {
+    const tbody = document.getElementById('itemTableBody');
+    if (!tbody) return; // Customers page   skip
 
-    // 1. SAVE ITEM
-    $('#btnSaveItem').click(function () {
-        let desc = $('#itemDesc').val();
-        let price = $('#itemPrice').val();
-        let qty = $('#itemQty').val();
+    tbody.innerHTML = '';
 
-        if (desc === "" || price === "" || qty === "") {
-            alert("Please fill all fields!");
-            return;
-        }
-
-        let itemDTO = {
-            description: desc,
-            unitPrice: parseFloat(price),
-            qtyOnHand: parseInt(qty)
-        };
-
-        $.ajax({
-            url: BASE_URL,
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(itemDTO),
-            success: function (res) {
-                alert("Item Saved Successfully!");
-                clearForm();
-                getAllItems();
-            },
-            error: function (error) {
-                alert("Error saving item: Check if description is unique or valid.");
-            }
-        });
+    items.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+      <td>${item.code}</td>
+      <td>${item.name}</td>
+      <td>${item.price.toFixed(2)}</td>
+      <td>${item.qty}</td>
+      <td class="actions-cell">
+        <button class="edit-btn" title="Edit"><i data-lucide="pencil"></i></button>
+        <button class="delete-btn" title="Delete"><i data-lucide="trash-2"></i></button>
+      </td>
+    `;
+        tbody.appendChild(row);
     });
+}
 
-    // 2. GET ALL ITEMS
-    function getAllItems() {
-        $.ajax({
-            url: BASE_URL,
-            method: "GET",
-            success: function (res) {
-                console.log("Items received:", res);
-                let rows = "";
+// Modal handling (New Item)
+const itemModal = document.getElementById('newItemModal');
+const newItemBtn = document.getElementById('newItemBtn');
+const closeItemModal = document.getElementById('closeModal');
+const cancelItemBtn = document.getElementById('cancelBtn');
+const itemForm = document.getElementById('newItemForm');
 
-
-                if (res.data) {
-                    res.data.forEach(item => {
-                        rows += `<tr onclick="bindItemRow('${item.id}', '${item.description}', '${item.unitPrice}', '${item.qtyOnHand}')" style="cursor:pointer">
-                            <td>${item.id}</td>
-                            <td>${item.description}</td>
-                            <td>Rs. ${parseFloat(item.unitPrice).toFixed(2)}</td>
-                            <td>${item.qtyOnHand}</td>
-                            <td style="text-align: center;">
-                                <button class="btn-delete" onclick="deleteItem(event, ${item.id})">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>`;
-                    });
-                }
-                $('#itemTableBody').html(rows);
-                if(window.lucide) lucide.createIcons();
-            },
-            error: function (error) {
-                console.log("Error loading items", error);
-            }
-        });
-    }
-
-    // 3. DELETE ITEM
-    window.deleteItem = function (event, id) {
-        event.stopPropagation();
-        if(confirm("Are you sure you want to delete this item?")) {
-            $.ajax({
-                url: BASE_URL + id,
-                method: "DELETE",
-                success: function (res) {
-                    alert("Item Deleted!");
-                    getAllItems();
-                    clearForm();
-                },
-                error: function (error) {
-                    alert("Failed to delete item!");
-                }
-            });
-        }
-    }
-
-    // 4. UPDATE ITEM
-    $('#btnUpdateItem').click(function () {
-        let id = $('#itemId').val();
-        if(!id) return alert("Please select an item from table first!");
-
-        let itemDTO = {
-            id: id,
-            description: $('#itemDesc').val(),
-            unitPrice: parseFloat($('#itemPrice').val()),
-            qtyOnHand: parseInt($('#itemQty').val())
-        };
-
-        $.ajax({
-            url: BASE_URL,
-            method: "PUT",
-            contentType: "application/json",
-            data: JSON.stringify(itemDTO),
-            success: function (res) {
-                alert("Item Updated Successfully!");
-                getAllItems();
-                clearForm();
-            },
-            error: function (error) {
-                alert("Update failed!");
-            }
-        });
+if (newItemBtn) {
+    newItemBtn.addEventListener('click', () => {
+        itemModal.style.display = 'flex';
     });
+}
 
-    window.bindItemRow = function(id, desc, price, qty) {
-        $('#itemId').val(id);
-        $('#itemDesc').val(desc);
-        $('#itemPrice').val(price);
-        $('#itemQty').val(qty);
-    }
+if (closeItemModal) {
+    closeItemModal.addEventListener('click', () => {
+        itemModal.style.display = 'none';
+    });
+}
 
-    function clearForm() {
-        $('#itemId').val("");
-        $('#itemDesc').val("");
-        $('#itemPrice').val("");
-        $('#itemQty').val("");
+if (cancelItemBtn) {
+    cancelItemBtn.addEventListener('click', () => {
+        itemModal.style.display = 'none';
+    });
+}
+
+window.addEventListener('click', (e) => {
+    if (e.target === itemModal) {
+        itemModal.style.display = 'none';
     }
+});
+
+// Form submit (demo only)
+if (itemForm) {
+    itemForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('New Item successfully! (Demo mode)');
+        itemModal.style.display = 'none';
+        itemForm.reset();
+
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadItems();
 });

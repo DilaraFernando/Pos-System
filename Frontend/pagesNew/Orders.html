@@ -1,114 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlowCare | Place Order</title>
-    <link rel="stylesheet" href="../styles/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>POS System</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="../styles/order.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 
-<div class="app-shell">
-    <nav class="side-nav">
-        <div class="nav-brand"><i data-lucide="shield-check"></i></div>
-        <div class="nav-links">
-            <a href="../index.html" class="nav-item" title="Dashboard"><i data-lucide="layout-dashboard"></i></a>
-            <a href="Customer.html" class="nav-item" title="Customers"><i data-lucide="users-round"></i></a>
-            <a href="Item.html" class="nav-item" title="Inventory"><i data-lucide="package-search"></i></a>
-            <a href="Orders.html" class="nav-item active" title="Orders"><i data-lucide="shopping-bag"></i></a>
-        </div>
-        <div class="nav-user"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"></div>
+<aside class="sidebar">
+    <div class="logo">POS Hub</div>
+    <nav>
+        <ul>
+            <li><a href="../index.html" class="active"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="Customer.html"><i data-lucide="users"></i> Customers</a></li>
+            <li><a href="Item.html"><i data-lucide="box"></i> Items</a></li>
+            <li><a href="Orders.html"><i data-lucide="shopping-cart"></i> Orders</a></li>
+
+        </ul>
     </nav>
+</aside>
 
-    <main class="main-viewport">
-        <header class="main-header">
-            <div class="page-title">
-                <h2>Place <span class="gradient-text">New Order</span></h2>
+<main>
+    <header>
+        <h1>Order</h1>
+        <div class="user-info">
+            <div class="avatar">DS</div>
+            <div>
+                <div>Dilara Shamindhi</div>
+                <div class="role">Admin</div>
             </div>
-            <div class="order-info">
-                <div class="info-tag">Order ID: <span id="lblOrderId">ORD-001</span></div>
-                <div class="info-tag">Date: <span id="lblDate">2026-02-18</span></div>
-            </div>
-        </header>
-
-        <div class="order-grid">
-            <div class="selection-area">
-                <section class="glass-panel">
-                    <h3><i data-lucide="user"></i> Customer Selection</h3>
-                    <div class="row">
-                        <div class="input-group">
-                            <label>Select Customer ID</label>
-                            <select id="cmbCustomerId"><option value="">Select ID</option></select>
-                        </div>
-                        <div class="input-group">
-                            <label>Customer Name</label>
-                            <input type="text" id="orderCustName" readonly>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="glass-panel" style="margin-top: 1.5rem;">
-                    <h3><i data-lucide="package"></i> Item Selection</h3>
-                    <div class="row">
-                        <div class="input-group">
-                            <label>Select Item</label>
-                            <select id="cmbItemId"><option value="">Select Item</option></select>
-                        </div>
-                        <div class="input-group">
-                            <label>Price</label>
-                            <input type="text" id="orderItemPrice" readonly>
-                        </div>
-                        <div class="input-group">
-                            <label>Qty On Hand</label>
-                            <input type="text" id="orderQtyOnHand" readonly style="color: #fb7185; font-weight: bold;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <label>Buying Quantity</label>
-                            <input type="number" id="txtBuyQty" placeholder="0">
-                        </div>
-                        <div class="btn-wrap">
-                            <button id="btnAddToCart" class="btn btn-add">
-                                <i data-lucide="shopping-cart"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <section class="glass-panel cart-area">
-                <div class="cart-header">
-                    <h3><i data-lucide="list"></i> Order Details</h3>
-                    <div class="total-display">Total: <span id="lblTotal">Rs. 0.00</span></div>
-                </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Item ID</th>
-                            <th>Qty</th>
-                            <th>Unit Price</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody id="cartTableBody"></tbody>
-                    </table>
-                </div>
-                <button id="btnPlaceOrder" class="btn btn-place">
-                    <i data-lucide="check-circle"></i> Complete Order
-                </button>
-            </section>
+            <button class="logout-btn">Logout</button>
         </div>
-    </main>
-</div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i data-lucide="users"></i></div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Customers</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i data-lucide="box"></i></div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Items</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i data-lucide="shopping-cart"></i></div>
+            <div class="stat-value">0</div>
+            <div class="stat-label">Orders</div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- POS Create Order -->
+        <div class="create-order-card">
+            <div class="card-title">POS Create Order</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Select Customer</label>
+                    <select id="customerSelect">
+                        <option>-- Select Customer --</option>
+                        <option>John Doe</option>
+                        <option>Sara Perera</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Select Item</label>
+                    <select id="itemSelect">
+                        <option>-- Select Item --</option>
+                        <option value="50000">MacBook Pro - LKR 50,000</option>
+                        <option value="4500">iPhone Case - LKR 4,500</option>
+                    </select>
+                </div>
+                <div class="form-group qty">
+                    <label>Qty</label>
+                    <input type="number" id="qty" value="1" min="1">
+                </div>
+                <div class="form-group add-btn-wrapper">
+                    <button class="btn-primary" id="addItemBtn">Add</button>
+                </div>
+            </div>
+
+            <table class="cart-table">
+                <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody id="cartBody">
+                <tr><td colspan="4" class="empty-cart">No items added</td></tr>
+                </tbody>
+            </table>
+
+            <div class="totals">
+                <div><span>Subtotal</span><span id="subtotal">0.00</span></div>
+                <div><span>Tax (0%)</span><span>0.00</span></div>
+                <div class="grand-total"><span>Grand Total</span><span id="grandTotal">0.00</span></div>
+            </div>
+
+            <div class="notes-section">
+                <label>Notes</label>
+                <textarea placeholder="Optional notes..."></textarea>
+            </div>
+
+            <div class="order-actions">
+                <button class="btn-outline">Clear</button>
+                <button class="btn-primary place-order">Place Order</button>
+            </div>
+        </div>
+
+        <!-- Right side: Recent Orders + Quick Actions -->
+        <div class="right-column">
+            <div class="recent-orders-card">
+                <div class="card-title">
+                    <span>Recent Orders</span>
+                    <button class="btn-outline view-all">View All</button>
+                </div>
+                <p class="no-data">No orders yet.</p>
+            </div>
+
+            <div class="quick-actions-card">
+                <div class="card-title">Quick Actions</div>
+                <div class="quick-actions">
+                    <button class="btn-primary">Add Customer</button>
+                    <button class="btn-primary">Add Item</button>
+                    <button class="btn-outline">Open Customers</button>
+                    <button class="btn-outline">Open Items</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
 <script src="../scripts/Order.js"></script>
-<script>lucide.createIcons();</script>
 </body>
 </html>

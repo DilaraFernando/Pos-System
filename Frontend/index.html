@@ -1,178 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlowCare AI | Intelligent OS</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>POS Dashboard • Modern Retail</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-
-        body, html {
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .app-shell {
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .main-viewport {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .dashboard-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            gap: 20px;
-            overflow: hidden;
-            min-height: 0;
-        }
-
-        .welcome-banner {
-            flex-shrink: 0;
-        }
-
-        .grid-layout {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            min-height: 0;
-        }
-
-        .chart-card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            min-height: 0;
-        }
-
-        .chart-card canvas {
-            flex: 1 !important;
-            height: 100% !important;
-            width: 100% !important;
-        }
-
-        .action-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            height: 100%;
-        }
-
-        .action-tile {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            min-height: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 
-<div class="app-shell">
-    <nav class="side-nav">
-        <div class="nav-brand">
-            <div class="brand-glow"></div>
-            <i data-lucide="shield-check"></i>
-        </div>
-        <div class="nav-links">
-            <a href="index.html" class="nav-item active" title="Home"><i data-lucide="layout-dashboard"></i></a>
-            <a href="pagesNew/Customer.html" class="nav-item" title="Customers"><i data-lucide="users-round"></i></a>
-            <a href="pagesNew/Item.html" class="nav-item" title="Inventory"><i data-lucide="package-search"></i></a>
-            <a href="pagesNew/Orders.html" class="nav-item" title="Orders"><i data-lucide="shopping-bag"></i></a>
-        </div>
-        <div class="nav-user">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin" alt="Admin">
-        </div>
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="logo">POS<span style="color:var(--primary)">Hub</span></div>
+
+    <nav>
+
+        <a href="index.html" class="nav-item"><i data-lucide="bar-chart-3"></i>Dashboard</a>
+        <a href="pagesNew/Customer.html" class="nav-item"><i data-lucide="shopping-cart"></i>Customer</a>
+        <a href="pagesNew/Item.html" class="nav-item"><i data-lucide="users"></i>Item</a>
+        <a href="pagesNew/Orders.html" class="nav-item"><i data-lucide="dollar-sign"></i>Order</a>
+
     </nav>
+</aside>
 
-    <main class="main-viewport">
-        <header class="main-header animate__animated animate__fadeInDown">
-            <div class="search-container">
-                <i data-lucide="search"></i>
-                <input type="text" placeholder="Command + K to search...">
+<!-- Main -->
+<main>
+
+    <header>
+        <h1>Dashboard</h1>
+        <div class="header-right">
+            <div style="position:relative;">
+                <i data-lucide="bell" style="cursor:pointer;"></i>
             </div>
-            <div class="header-right">
-                <div class="status-pill">
-                    <span class="pulse-dot"></span> System Live
-                </div>
-                <div class="admin-badge">
-                    <span>admin@glowcare.ai</span>
-                </div>
-            </div>
-        </header>
-
-        <div class="dashboard-content">
-            <div class="welcome-banner animate__animated animate__fadeInUp">
-                <div class="banner-text">
-                    <h1>System <span class="gradient-text">Intelligence</span></h1>
-                    <p>Welcome back. Your GlowCare nodes are running optimally.</p>
-                </div>
-                <div class="live-clock" id="clock">00:00:00</div>
-            </div>
-
-            <div class="grid-layout">
-                <div class="chart-card glass-panel">
-                    <div class="card-header">
-                        <h3>Growth Analytics</h3>
-                        <i data-lucide="more-horizontal"></i>
-                    </div>
-                    <canvas id="myChart"></canvas>
-                </div>
-
-                <div class="action-stack">
-                    <div class="action-tile blue">
-                        <i data-lucide="users"></i>
-                        <div class="stat-content">
-                            <small>Total Customers</small>
-                            <h2 id="totalCustomers">0</h2>
-                        </div>
-                    </div>
-                    <div class="action-tile purple">
-                        <i data-lucide="package"></i>
-                        <div class="stat-content">
-                            <small>Total Items</small>
-                            <h2 id="totalItems">0</h2>
-                        </div>
-                    </div>
-                    <div class="action-tile green">
-                        <i data-lucide="shopping-cart"></i>
-                        <div class="stat-content">
-                            <small>Total Orders</small>
-                            <h2 id="totalOrders">0</h2>
-                        </div>
-                    </div>
-                    <div class="action-tile gold" style="color: #fbbf24;">
-                        <i data-lucide="banknote"></i>
-                        <div class="stat-content">
-                            <small>Total Income</small>
-                            <h2 id="totalIncome">Rs. 0</h2>
-                        </div>
-                    </div>
+            <div class="user">
+                <div class="avatar"></div>
+                <div>
+                    <div style="font-weight:500;">Dilara Fernando</div>
+                    <div style="font-size:0.85rem;color:var(--text-muted);">Admin</div>
                 </div>
             </div>
         </div>
-    </main>
-</div>
+    </header>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Stats -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="color:var(--primary)"><i data-lucide="dollar-sign"></i></div>
+            <div class="stat-value">LKR 148,920</div>
+            <div class="stat-label">Today's Revenue</div>
+            <div style="margin-top:0.5rem;font-size:0.9rem;">
+                <span class="positive">+18.4%</span> from yesterday
+            </div>
+        </div>
 
+        <div class="stat-card">
+            <div class="stat-icon" style="color:var(--green)"><i data-lucide="shopping-cart"></i></div>
+            <div class="stat-value">187</div>
+            <div class="stat-label">Orders Today</div>
+            <div style="margin-top:0.5rem;font-size:0.9rem;">
+                <span class="positive">+12%</span> vs last week
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="color:var(--yellow)"><i data-lucide="star"></i></div>
+            <div class="stat-value">Potters</div>
+            <div class="stat-label">Top Product</div>
+            <div style="margin-top:0.5rem;font-size:0.9rem;">42 units sold today</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon" style="color:var(--red)"><i data-lucide="alert-triangle"></i></div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Low Stock Items</div>
+            <div style="margin-top:0.5rem;font-size:0.9rem;">Check inventory now</div>
+        </div>
+    </div>
+
+    <!-- Chart + Recent Transactions -->
+    <div class="content-grid">
+
+        <!-- Sales Trend Chart -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Sales Trend (Last 7 Days)</div>
+                <select style="background:var(--border);color:var(--text);padding:0.5rem 1rem;border:none;border-radius:0.5rem;">
+                    <option>Week</option>
+                    <option>Month</option>
+                    <option>Year</option>
+                </select>
+            </div>
+            <div class="chart-container">
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Recent Transactions</div>
+                <a href="#" style="color:var(--primary);font-size:0.9rem;text-decoration:none;">View all →</a>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>#3921</td>
+                    <td>John Doe</td>
+                    <td>LKR 12,450</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>#3920</td>
+                    <td>Emily Smith</td>
+                    <td>LKR 8,990</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                    <td>#3919</td>
+                    <td>Michael Raj</td>
+                    <td>LKR 24,500</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td>#3918</td>
+                    <td>Sara Perera</td>
+                    <td>LKR 4,200</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 <script src="scripts/dashBoard.js"></script>
+</main>
 </body>
 </html>

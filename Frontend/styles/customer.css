@@ -1,184 +1,253 @@
-/* Layout & Grid */
-.content-grid {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 1.5rem;
-    height: calc(100vh - 150px);
+/* styles/style.css - POS System (screenshot එකේ colors එක්ක match) */
+
+:root {
+    --bg:           #f8fafc;        /* light cool background */
+    --card-bg:      #ffffff;        /* white cards */
+    --border:       #e2e8f0;        /* soft light gray borders */
+    --text:         #0f172a;        /* dark text - high contrast */
+    --text-muted:   #64748b;        /* muted gray for labels */
+    --primary:      #3b82f6;        /* main blue - active nav & buttons */
+    --primary-dark: #2563eb;        /* darker hover blue */
+    --primary-soft: #60a5fa;        /* light blue hover */
+    --sidebar-bg:   #1e293b;        /* dark sidebar */
+    --sidebar-text: #94a3b8;        /* light gray sidebar text */
+    --green:        #10b981;
+    --red:          #ef4444;
+    --yellow:       #f59e0b;
 }
 
-.form-section h3, .table-section h3 {
-    margin-bottom: 1.5rem;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    width: 240px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid #334155;
+    padding: 1.5rem 1rem;
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+}
+
+.logo {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+.nav-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    color: var(--primary-glow);
+    gap: 0.8rem;
+    padding: 0.9rem 1.25rem;
+    margin: 0.35rem 0;
+    border-radius: 0.7rem;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.22s ease;
 }
 
-/* Input Fields */
-.input-group {
-    margin-bottom: 1.2rem;
-}
-
-.input-group label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--text-dim);
-    margin-bottom: 5px;
-}
-
-.input-group input, .input-group textarea {
-    width: 100%;
-    padding: 12px;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
+.nav-item:hover {
+    background: rgba(59, 130, 246, 0.15); /* light blue hover */
     color: white;
-    outline: none;
-    transition: 0.3s;
 }
 
-.input-group input:focus, .input-group textarea:focus {
-    border-color: var(--primary-glow);
-    background: rgba(99, 102, 241, 0.05);
-}
-
-.input-group textarea { height: 80px; resize: none; }
-
-/* --- PREMIUM BUTTONS --- */
-.btn-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.btn {
-    flex: 1;
-    min-width: 100px;
-    padding: 12px 15px;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
+.nav-item.active {
+    background: var(--primary);
+    color: white;
     font-weight: 600;
-    font-family: 'Outfit', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Save Button - Glowing Indigo */
-.btn-save {
-    background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+/* ── Main Content ── */
+main {
+    margin-left: 240px;
+    flex: 1;
+    padding: 2rem 2.2rem;
 }
 
-.btn-save:hover {
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
-    transform: translateY(-3px);
-}
-
-/* Update Button - Glowing Purple */
-.btn-update {
-    background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
-}
-
-.btn-update:hover {
-    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.5);
-    transform: translateY(-3px);
-}
-
-/* Clear Button - Glass Gray */
-.btn-clear {
-    background: rgba(255, 255, 255, 0.05);
-    color: #94a3b8;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.btn-clear:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-}
-
-.btn:active { transform: scale(0.95); }
-
-/* --- TABLE STYLING --- */
-.table-header {
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.4rem;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.search-wrap {
+h1 {
+    font-size: 1.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* ── Card ── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    padding: 1.35rem 1.6rem;
+    border-bottom: 1px solid var(--border);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 10px;
-    background: rgba(0,0,0,0.2);
-    padding: 8px 15px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: #f8fafc;
 }
 
-.search-wrap input {
-    background: transparent;
-    border: none;
-    color: white;
+.card-title {
+    font-size: 1.22rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* Search input */
+.card-header input[type="text"] {
+    padding: 0.65rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    width: 320px;
+    max-width: 100%;
     outline: none;
 }
 
-.table-wrapper {
-    overflow-y: auto;
-    max-height: calc(100vh - 300px);
+.card-header input[type="text"]:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
+/* ── Table ── */
 table {
     width: 100%;
     border-collapse: collapse;
+}
+
+th, td {
+    padding: 1.15rem 1.4rem;
     text-align: left;
+    border-bottom: 1px solid var(--border);
 }
 
 th {
-    padding: 15px;
-    color: var(--text-dim);
-    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    letter-spacing: 0.4px;
+    background: #f8fafc;
 }
 
 td {
-    padding: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-size: 0.95rem;
+    font-size: 0.97rem;
+    color: var(--text);
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 tr:hover {
-    background: rgba(255, 255, 255, 0.02);
-    cursor: pointer;
+    background: rgba(59, 130, 246, 0.03);
 }
 
-/* Delete Action Button */
-.btn-delete {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(239, 68, 68, 0.2);
+/* Action buttons */
+td button {
+    background: none;
+    border: none;
     cursor: pointer;
-    transition: 0.3s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 1.1rem;
+    padding: 0.3rem;
+    transition: all 0.18s;
 }
 
-.btn-delete:hover {
-    background: #ef4444;
+td button:hover {
+    transform: scale(1.15);
+}
+
+/* ── Add / New Customer Button ── */
+.header-right button,
+.btn-primary {
+    background: var(--primary);
     color: white;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-    transform: scale(1.1);
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 0.6rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.header-right button:hover,
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
+}
+
+/* ── Lucide icons ── */
+i {
+    width: 1.1em;
+    height: 1.1em;
+    stroke-width: 2.2;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .card-header input[type="text"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    main {
+        margin-left: 0;
+        padding: 1.5rem 1rem;
+    }
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .header-right {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar.active {
+        transform: translateX(0);
+    }
 }

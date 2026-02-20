@@ -1,100 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlowCare | Inventory Management</title>
-    <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/Item.css"> <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Items • POS SYSTEM</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../styles/Item.css">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 
-<div class="app-shell">
-    <nav class="side-nav">
-        <div class="nav-brand"><i data-lucide="shield-check"></i></div>
-        <div class="nav-links">
-            <a href="../index.html" class="nav-item" title="Dashboard"><i data-lucide="layout-dashboard"></i></a>
-            <a href="Customer.html" class="nav-item" title="Customers"><i data-lucide="users-round"></i></a>
-            <a href="Item.html" class="nav-item active" title="Inventory"><i data-lucide="package-search"></i></a>
-            <a href="Orders.html" class="nav-item" title="Orders"><i data-lucide="shopping-bag"></i></a>
-        </div>
-        <div class="nav-user"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"></div>
+<aside class="sidebar">
+    <div class="logo">
+        POS<span>Hub</span>
+    </div>
+    <nav>
+        <a href="../index.html"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a href="Customer.html"><i data-lucide="users"></i> Customers</a>
+        <a href="Item.html" class="active"><i data-lucide="box"></i> Items</a>
+        <a href="Orders.html"><i data-lucide="shopping-cart"></i> Orders</a>
+
     </nav>
+</aside>
 
-    <main class="main-viewport">
-        <header class="main-header">
-            <div class="page-title">
-                <h2>Inventory <span class="gradient-text">Management</span></h2>
+<main>
+    <header>
+        <h1>Items</h1>
+        <div class="user-section">
+            <div class="user-avatar">DS</div>
+            <div class="user-details">
+                <div class="name">Dilara Shamindhi</div>
+                <div class="role">Admin</div>
             </div>
-            <div class="admin-badge"><span>admin@glowcare.ai</span></div>
-        </header>
-
-        <div class="content-grid">
-            <section class="glass-panel form-section">
-                <h3><i data-lucide="package-plus"></i> Add / Update Item</h3>
-                <form id="itemForm">
-                    <div class="input-group">
-                        <label>Item ID (Auto-gen)</label>
-                        <input type="number" id="itemId" placeholder="ID shows here" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label>Description</label>
-                        <input type="text" id="itemDesc" required placeholder="Ex: Laptop - Dell XPS">
-                    </div>
-                    <div class="input-group">
-                        <label>Unit Price (Rs.)</label>
-                        <input type="number" id="itemPrice" step="0.01" required placeholder="0.00">
-                    </div>
-                    <div class="input-group">
-                        <label>Quantity On Hand</label>
-                        <input type="number" id="itemQty" required placeholder="0">
-                    </div>
-
-                    <div class="btn-row">
-                        <button type="button" id="btnSaveItem" class="btn btn-save">
-                            <i data-lucide="plus-circle"></i> Save
-                        </button>
-                        <button type="button" id="btnUpdateItem" class="btn btn-update">
-                            <i data-lucide="refresh-cw"></i> Update
-                        </button>
-                        <button type="reset" class="btn btn-clear">
-                            <i data-lucide="eraser"></i> Clear
-                        </button>
-                    </div>
-                </form>
-            </section>
-
-            <section class="glass-panel table-section">
-                <div class="table-header">
-                    <h3><i data-lucide="package"></i> Stock Inventory</h3>
-                    <div class="search-wrap">
-                        <i data-lucide="search"></i>
-                        <input type="text" id="searchItem" placeholder="Search item...">
-                    </div>
-                </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Description</th>
-                            <th>Unit Price</th>
-                            <th>Qty</th>
-                            <th style="text-align: center;">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody id="itemTableBody">
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <button class="logout-btn">Logout</button>
         </div>
-    </main>
+    </header>
+
+    <div class="content-container">
+        <div class="page-header">
+            <h2>Item Management</h2>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="newItemBtn">
+                    <i data-lucide="plus"></i> New Item
+                </button>
+                <button class="btn btn-secondary">
+                    <i data-lucide="arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <table class="item-table">
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="itemTableBody">
+                <!-- Data dynamically added via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<!-- Modal for adding new item -->
+<div class="modal" id="newItemModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h3>Add New Item</h3>
+        <form id="newItemForm">
+            <div class="form-group">
+                <label>Code</label>
+                <input type="text" name="code" required placeholder="e.g. 1001">
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" required placeholder="Item name">
+            </div>
+            <div class="form-group">
+                <label>Price (LKR)</label>
+                <input type="number" name="price" required min="0" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" name="qty" required min="0" placeholder="0">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Item</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script src="../scripts/Item.js"></script>
-<script>lucide.createIcons();</script>
 </body>
 </html>
